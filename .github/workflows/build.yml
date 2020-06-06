@@ -1,0 +1,48 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: postgres
+        options: >-
+          --workdir /build
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Copy Code to Container
+        run: docker cp ./. ${{ job.services.postgres.id }}:/build
+
+      - name: Install Dependencies
+        run: docker exec ${{ job.services.postgres.id }} apk add --no-cache alpine-sdk
+
+      - name: Make
+        run: docker exec ${{ job.services.postgres.id }} make
+
+      - name: Make Install
+        run: docker exec ${{ job.services.postgres.id }} make install
+
+      - name: Make Installcheck
+        run: docker exec ${{ job.services.postgres.id }} make installcheck
+
+      - name: Make Clean
+        run: docker exec ${{ job.services.postgres.id }} make clean

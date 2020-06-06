@@ -1,0 +1,4 @@
+# cidr extension
+comment = 'transform ip range to cidr'
+default_version = '1.0'
+relocatable = true
