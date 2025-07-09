@@ -1,6 +1,6 @@
 # cidr
 
-![](https://github.com/ntkme/pg_cidr/workflows/build/badge.svg)
+[![build](https://github.com/ntkme/postgresql-cidr/actions/workflows/build.yml/badge.svg)](https://github.com/ntkme/postgresql-cidr/actions/workflows/build.yml)
 
 ## Installation
 
