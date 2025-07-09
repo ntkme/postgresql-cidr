@@ -12,7 +12,7 @@ BEGIN
     RAISE EXCEPTION 'cannot merge addresses from different families' USING ERRCODE = 'invalid_parameter_value';
   END IF;
 
-  IF masklen($1) <> maxlen OR masklen($1) <> maxlen THEN
+  IF masklen($1) <> maxlen OR masklen($2) <> maxlen THEN
     RAISE EXCEPTION 'cannot merge networks' USING ERRCODE = 'invalid_parameter_value';
   END IF;
 
